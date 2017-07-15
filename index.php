@@ -12,7 +12,6 @@ spl_autoload_register(function () {
     include_once __DIR__ . '/lib/core/Application.php';
     include_once __DIR__ . '/lib/core/Controller.php';
     include_once __DIR__ . '/lib/core/Model.php';
-    include_once __DIR__ . '/lib/core/View.php';
 });
 
 // Instantiate application
