@@ -7,10 +7,11 @@ $config = [
         'password' => '',
     ],
     'path' => [
-        'abs_path' => __DIR__,
-        'controllers_path' => __DIR__ . '/controllers',
-        'models_path' => __DIR__ . '/models',
-        'views_path' => __DIR__ . '/views',
+        'absolute' => __DIR__,
+        'controllers' => __DIR__ . '/lib/controllers',
+        'models' => __DIR__ . '/lib/models',
+        'views' => __DIR__ . '/lib/views',
+        'views_cache' => __DIR__ . '/lib/views/cache',
     ],
     'logger' => [
         'default' => [
