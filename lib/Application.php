@@ -7,7 +7,9 @@ use Phlib\Logger;
 class Application
 {
     public $config;
-    private $logger;
+    public $logger;
+    private $controller;
+    private $controllerName;
 
     public function __construct(array $config)
     {
@@ -28,7 +30,10 @@ class Application
      */
     public function callController($controller, $method, array $args = [__CLASS__])
     {
-        $classFilename = $this->config['abs_path'] . "/controllers/$controller.php";
+        $this->controllerName = $controller;
+
+        // include controller file
+        $classFilename = $this->config['abs_path'] . "/controllers/$this->controllerName.php";
         spl_autoload_register(function () use ($classFilename) {
             if (file_exists($classFilename)) {
                 include_once $classFilename;
@@ -38,18 +43,20 @@ class Application
             }
         });
 
-        $className = '\TestApp\Controllers\\' . $controller;
+        // instantiate controller
+        $className = '\TestApp\Controllers\\' . $this->controllerName;
         if (!class_exists($className)) {
             $this->logger->critical("Class '$className' did not found", [__CLASS__]);
             $this->ApplicationError();
         }
-        $class = new $className($this);
+        $this->controller = new $className($this);
 
+        // call controller's method and pass arguments
         if (!method_exists($className, $method)) {
             $this->logger->critical("Method '$method' of class '$className' did not found", [__CLASS__]);
             $this->ApplicationError();
         }
-        call_user_func_array([$class, $method], $args);
+        call_user_func_array([$this->controller, $method], $args);
     }
 
     public function ApplicationError()
