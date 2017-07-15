@@ -26,7 +26,7 @@ abstract class Model
                 $this->app->config['database']['password'], $options);
         } catch (\PDOException $e) {
             $this->app->logger->critical('Could not connect to DB: ' . $e->getMessage());
-            $this->app->ApplicationError();
+            $this->app->ApplicationError('Database Error');
         }
     }
 

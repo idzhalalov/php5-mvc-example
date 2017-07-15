@@ -52,11 +52,11 @@ class Application
         call_user_func_array([$this->controller, $method], $args);
     }
 
-    public function ApplicationError()
+    public function ApplicationError($message = 'Application Error')
     {
         $this->logger->info('Sending code 500 to client');
         http_response_code(500);
-        echo 'Application Error';
+        echo $message;
         exit;
     }
 
