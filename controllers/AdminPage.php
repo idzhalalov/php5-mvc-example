@@ -7,6 +7,6 @@ class AdminPage extends Controller
 {
     public function index()
     {
-        echo 'Hello, Admin';
+        echo 'Hello Admin';
     }
 }
