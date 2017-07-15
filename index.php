@@ -6,6 +6,13 @@ spl_autoload_register(function () {
     include __DIR__ . '/lib/View.php';
 });
 
+/**
+ * Connects the controller and calls the desired method
+ *
+ * @param $controller controller's name
+ * @param $method method's name
+ * @param array $args method's arguments
+ */
 function controllerExec($controller, $method, array $args = [])
 {
     $classFilename = __DIR__ . "/controllers/$controller.php";
