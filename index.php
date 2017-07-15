@@ -1,4 +1,11 @@
 <?php
+/**
+ * Conventions:
+ *
+ * - controller, model and view names are must be equivalent
+ *
+ */
+
 require __DIR__ . '/vendor/autoload.php';
 require __DIR__ . '/config.php';
 spl_autoload_register(function () {
