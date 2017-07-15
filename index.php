@@ -9,10 +9,10 @@
 require __DIR__ . '/vendor/autoload.php';
 require __DIR__ . '/config.php';
 spl_autoload_register(function () {
-    include_once __DIR__ . '/lib/Application.php';
-    include_once __DIR__ . '/lib/Controller.php';
-    include_once __DIR__ . '/lib/Model.php';
-    include_once __DIR__ . '/lib/View.php';
+    include_once __DIR__ . '/lib/core/Application.php';
+    include_once __DIR__ . '/lib/core/Controller.php';
+    include_once __DIR__ . '/lib/core/Model.php';
+    include_once __DIR__ . '/lib/core/View.php';
 });
 
 // Instantiate application

@@ -33,7 +33,7 @@ class Application
         $this->controllerName = $controller;
 
         // include controller file
-        $classFilename = $this->config['abs_path'] . "/controllers/$this->controllerName.php";
+        $classFilename = $this->config['path']['controllers_path'] . "/$this->controllerName.php";
         $this->connectScript($classFilename);
 
         // instantiate controller
@@ -67,7 +67,7 @@ class Application
         }
 
         // include model file
-        $classFilename = $this->config['abs_path'] . "/models/$this->controllerName.php";
+        $classFilename = $this->config['path']['models_path'] . "/$this->controllerName.php";
         $this->connectScript($classFilename);
 
         // instantiate model

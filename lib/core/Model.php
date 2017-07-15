@@ -6,6 +6,7 @@ use TestApp\Lib\Application;
 abstract class Model
 {
     private $connection;
+    private $tableName;
     protected $app;
 
     public function __construct(Application $app)
