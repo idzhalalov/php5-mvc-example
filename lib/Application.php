@@ -2,7 +2,6 @@
 namespace TestApp\Lib;
 
 use Phlib\Logger;
-use TestApp\Lib\Exceptions\AppplicationErrorException as ApplicationError;
 
 class Application
 {
