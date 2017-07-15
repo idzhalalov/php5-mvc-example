@@ -2,6 +2,7 @@
 namespace TestApp\Lib\Model;
 
 use TestApp\Lib\Application;
+use PDO;
 
 abstract class Model
 {
@@ -19,10 +20,13 @@ abstract class Model
             PDO::MYSQL_ATTR_FOUND_ROWS => true
         );
         try {
-            $dsn = 'mysql:host=' . $this->app->config['host'] . ';dbname=' . $this->app->config['db_name'] . ';charset=utf8';
-            $this->connection = new PDO($dsn, $this->app->config['user'], $this->app->config['password'], $options);
-        } catch (PDOException $e) {
-            throw new \Exception('Couldn\'t connect to DB: ' . $e->getMessage());
+            $dsn = 'mysql:host=' . $this->app->config['database']['host'] . ';dbname=' .
+                $this->app->config['database']['db_name'] . ';charset=utf8';
+            $this->connection = new PDO($dsn, $this->app->config['database']['user'],
+                $this->app->config['database']['password'], $options);
+        } catch (\PDOException $e) {
+            $this->app->logger->critical('Could not connect to DB: ' . $e->getMessage());
+            $this->app->ApplicationError();
         }
     }
 
