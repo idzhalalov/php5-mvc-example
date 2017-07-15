@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: idzhalalov
- * Date: 15.07.17
- * Time: 11:19 AM
- */
 require __DIR__ . '/vendor/autoload.php';
 spl_autoload_register(function () {
     include __DIR__ . '/lib/Controller.php';
@@ -35,8 +29,10 @@ function controllerExec($controller, $method, array $args = [])
 $router = new \Bramus\Router\Router();
 
 // Routes
-$router->get('/', controllerExec('MainPage', 'index'));
-$router->match('GET', '/ololo/', function () {
-    echo 'not main page';
+$router->get('/', function () {
+    controllerExec('MainPage', 'index');
+});
+$router->get('/admin', function () {
+    controllerExec('AdminPage', 'index');
 });
 $router->run();
