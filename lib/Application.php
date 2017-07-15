@@ -8,8 +8,6 @@ class Application
 {
     public $config;
     private $logger;
-    private $model;
-    private $view;
 
     public function __construct(array $config)
     {
@@ -27,14 +25,13 @@ class Application
      * @param $controller controller's name
      * @param $method method's name
      * @param array $args method's arguments
-     * @throws ApplicationError
      */
     public function callController($controller, $method, array $args = [__CLASS__])
     {
-        $classFilename = __DIR__ . "/controllers/$controller.php";
+        $classFilename = $this->config['abs_path'] . "/controllers/$controller.php";
         spl_autoload_register(function () use ($classFilename) {
             if (file_exists($classFilename)) {
-                include $classFilename;
+                include_once $classFilename;
             } else {
                 $this->logger->critical("File '$classFilename' did not found", [__CLASS__]);
                 $this->ApplicationError();
@@ -46,7 +43,7 @@ class Application
             $this->logger->critical("Class '$className' did not found", [__CLASS__]);
             $this->ApplicationError();
         }
-        $class = new $className();
+        $class = new $className($this);
 
         if (!method_exists($className, $method)) {
             $this->logger->critical("Method '$method' of class '$className' did not found", [__CLASS__]);

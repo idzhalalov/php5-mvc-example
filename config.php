@@ -1,6 +1,6 @@
 <?php
 $config = [
-    'logger' => $loggerConfig = [
+    'logger' => [
         'default' => [
             [
                 'type' => 'stream',
@@ -10,5 +10,12 @@ $config = [
                 'path' => __DIR__ . '/logs/app.log'
             ]
         ]
-    ]
+    ],
+    'database' => [
+        'host' => 'localhost',
+        'db_name' => 'test_app',
+        'user' => 'root',
+        'password' => '00',
+    ],
+    'abs_path' => __DIR__,
 ];

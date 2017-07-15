@@ -3,6 +3,12 @@ namespace TestApp\Lib;
 
 abstract class Controller
 {
+    protected $app;
+    public function __construct(Application $app)
+    {
+        $this->app = $app;
+    }
+
     public function post($var, $default = null)
     {
         if (isset($_POST[$var])) {
@@ -20,4 +26,5 @@ abstract class Controller
             return $default;
         }
     }
+
 }
