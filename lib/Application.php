@@ -1,8 +1,8 @@
 <?php
 namespace TestApp\Lib;
 
-use TestApp\Lib\Exceptions\AppplicationErrorException as ApplicationError;
 use Phlib\Logger;
+use TestApp\Lib\Exceptions\AppplicationErrorException as ApplicationError;
 
 class Application
 {
@@ -10,6 +10,7 @@ class Application
     public $logger;
     private $controller;
     private $controllerName;
+    private $model;
 
     public function __construct(array $config)
     {
@@ -34,22 +35,15 @@ class Application
 
         // include controller file
         $classFilename = $this->config['abs_path'] . "/controllers/$this->controllerName.php";
-        spl_autoload_register(function () use ($classFilename) {
-            if (file_exists($classFilename)) {
-                include_once $classFilename;
-            } else {
-                $this->logger->critical("File '$classFilename' did not found", [__CLASS__]);
-                $this->ApplicationError();
-            }
-        });
+        $this->connectScript($classFilename);
 
         // instantiate controller
         $className = '\TestApp\Controllers\\' . $this->controllerName;
-        if (!class_exists($className)) {
-            $this->logger->critical("Class '$className' did not found", [__CLASS__]);
+        if ($this->isValidClass($className)) {
+            $this->controller = new $className($this);
+        } else {
             $this->ApplicationError();
         }
-        $this->controller = new $className($this);
 
         // call controller's method and pass arguments
         if (!method_exists($className, $method)) {
@@ -66,4 +60,42 @@ class Application
         echo 'Application Error';
         exit;
     }
+
+    public function getModel()
+    {
+        if ($this->model !== null) {
+            return $this->model;
+        }
+
+        // include model file
+        $classFilename = $this->config['abs_path'] . "/models/$this->controllerName.php";
+        $this->connectScript($classFilename);
+
+        // instantiate model
+        $className = '\TestApp\Models\\' . $this->controllerName;
+        if ($this->isValidClass($className)) {
+            $this->controller = new $className($this);
+        } else {
+            $this->ApplicationError();
+        }
+    }
+
+    private function connectScript($path)
+    {
+        if (file_exists($path)) {
+            include_once $path;
+        } else {
+            $this->logger->critical("File '$path' did not found", [__CLASS__]);
+            $this->ApplicationError();
+        }
+    }
+
+    private function isValidClass($className)
+    {
+        if (class_exists($className)) {
+            return true;
+        }
+        return false;
+    }
+
 }
