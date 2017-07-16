@@ -1,31 +1,35 @@
 <div class="panel panel-default" style="padding: 15px">
-    <form action="/admin/task" method="post">
+    <form action="/admin/task/save" method="post">
         <div class="form-group">
             <label for="exampleInputEmail1">User name</label>
-            <input type="text" class="form-control" id="id_username" placeholder="User name">
+            <input type="text" class="form-control" id="id_username" placeholder="User name"
+                   value="{{ task['user_name'] }}">
         </div>
         <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
             <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                   placeholder="Enter email">
+                   placeholder="Enter email" value="{{ task['user_email'] }}">
         </div>
         <div class="form-group">
             <label for="textarea">Task</label>
-            <textarea class="form-control" id="exampleTextarea" rows="5"></textarea>
+            <textarea class="form-control" id="exampleTextarea" rows="5">{{ task['text'] }}</textarea>
         </div>
         <div class="form-group">
             <label for="exampleInputFile">Select image</label>
             <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
             <small id="fileHelp" class="form-text text-muted">Image. Must be JPG/GIF/PNG, size — 320х240
             </small>
+            {{ task['picture'] }}
         </div>
         <div class="form-check">
             <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" name="done">
+                <input type="checkbox" class="form-check-input" name="done"
+                    {% if task['is_done'] == 1 %} checked {% endif %}">
                 Task is done
             </label>
         </div>
-        <br />
+        <br/>
+        <input type="hidden" name="taskId" value="{{ task['id'] }}">
         <button type="submit" class="btn btn-primary">Submit</button>
         <button type="button" id="previewBtn" class="btn btn-warning">Preview</button>
     </form>
