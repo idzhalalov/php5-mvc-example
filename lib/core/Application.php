@@ -99,5 +99,13 @@ class Application
         return false;
     }
 
+    public function isAdmin()
+    {
+        if (isset($_SESSION['admin'])) {
+            return true;
+        }
+        return false;
+    }
+
 }
 
