@@ -4,3 +4,5 @@ composer.lock
 cache/
 config.php
 /*bootstrap*
+*.zip
+dayside/
