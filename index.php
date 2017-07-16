@@ -2,8 +2,8 @@
 /**
  * Conventions:
  *
- * - controller, model and view names are must be equivalent
- *
+ * - controller name must be equivalent to controller's filename
+ * - model name must be equivalent to model's filename and database table's name
  */
 
 require __DIR__ . '/vendor/autoload.php';
@@ -22,6 +22,9 @@ $router = new \Bramus\Router\Router();
 
 $router->get('/', function () use ($app) {
     $app->callController('MainPage', 'index');
+});
+$router->get('/tasks/(\d+)', function ($pageNum) use ($app) {
+    $app->callController('MainPage', 'tasks', ['pageNum' => $pageNum]);
 });
 $router->get('/admin', function () use ($app) {
     $app->callController('AdminPage', 'index');
