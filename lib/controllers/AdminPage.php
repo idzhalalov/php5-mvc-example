@@ -1,13 +1,23 @@
 <?php
 namespace TestApp\Controllers;
 
+use TestApp\Lib\Application;
 use TestApp\Lib\Controller;
 
 class AdminPage extends Controller
 {
+    private $model;
+
+    public function __construct(Application $app)
+    {
+        parent::__construct($app);
+        $this->model = $app->getModel('Tasks');
+    }
+
+
     public function index()
     {
-        if (!isset($_SESSION['admin'])) {
+        if (!$this->app->isAdmin()) {
             $this->app->ApplicationError('You must login first');
         }
         $this->view->display('template_admin.twig');
@@ -27,5 +37,19 @@ class AdminPage extends Controller
             header("Location: {$_SERVER['HTTP_ORIGIN']}/admin");
             exit();
         }
+    }
+
+    public function task()
+    {
+        if (!$this->app->isAdmin()) {
+            $this->app->ApplicationError('You must login first');
+        }
+
+        $taskId = $this->post('taskId');
+        $task = null;
+        if ($taskId) {
+            $task = $this->model->get(['id' => $taskId])[0];
+        }
+        $this->view->display('template_admin.twig', ['task' => $task]);
     }
 }
