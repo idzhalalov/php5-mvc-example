@@ -18,7 +18,7 @@ $config = [
             [
                 'type' => 'stream',
                 // the level of log messages to include (optional)
-                'level' => \Psr\Log\LogLevel::ERROR,
+                'level' => \Psr\Log\LogLevel::INFO,
                 // logger specific parameters
                 'path' => __DIR__ . '/logs/app.log'
             ]
