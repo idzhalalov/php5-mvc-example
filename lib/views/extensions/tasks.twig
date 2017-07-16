@@ -20,6 +20,15 @@
                 <td>{{ item.text }}</td>
                 <td>{{ item.picture }}</td>
                 <td>{{ item.status }}</td>
+                {% if isAdmin %}
+                    <td>
+                        <div id="navbar" class="navbar-collapse collapse">
+                            <form class="navbar-form navbar-right" action="/admin/task/{i}" method="post">
+                                <button type="submit" class="btn btn-success">Edit</button>
+                            </form>
+                        </div>
+                    </td>
+                {% endif %}
             </tr>
         {% endfor %}
     </table>
