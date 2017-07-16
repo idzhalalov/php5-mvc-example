@@ -73,7 +73,7 @@ class Application
         // instantiate model
         $className = '\TestApp\Models\\' . $name;
         if ($this->isValidClass($className)) {
-            $this->models[$name] = new $className($this, $name);
+            $this->models[$name] = new $className($this, strtolower($name));
         } else {
             $this->ApplicationError();
         }
@@ -100,3 +100,4 @@ class Application
     }
 
 }
+
