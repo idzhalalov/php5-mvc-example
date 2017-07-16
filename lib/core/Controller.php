@@ -7,6 +7,7 @@ use Twig_Loader_Filesystem;
 abstract class Controller
 {
     protected $app;
+    protected $view;
 
     public function __construct(Application $app)
     {
