@@ -1,0 +1,45 @@
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">Задачи</div>
+
+    <!-- Table -->
+    <table class="table">
+        <thead>
+        <td><b>id</b></td>
+        <td><b>name</b></td>
+        <td><b>email</b></td>
+        <td><b>text</b></td>
+        <td><b>picture</b></td>
+        <td><b>status</b></td>
+        </thead>
+        {% for item in tasks %}
+            <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.user_name }}</td>
+                <td>{{ item.user_email }}</td>
+                <td>{{ item.text }}</td>
+                <td>{{ item.picture }}</td>
+                <td>{{ item.status }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+{% block pagination %}
+    {% if pagesCount %}
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="{{ prevPage }}">Previous</a></li>
+                {% for i in range(1, pagesCount) %}
+                    {% if i == currentPage %}
+                        <li class="page-item active">
+                            <span class="page-link">{{ i }}<span class="sr-only">(current)</span></span>
+                        </li>
+                    {% else %}
+                        <li class="page-item"><a class="page-link" href="/tasks/{{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                <li class="page-item"><a class="page-link" href="{{ nextPage }}">Next</a></li>
+            </ul>
+        </nav>
+    {% endif %}
+{% endblock %}
