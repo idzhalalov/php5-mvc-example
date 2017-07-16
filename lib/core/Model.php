@@ -9,9 +9,9 @@ use PDO;
  */
 abstract class Model
 {
-    private $pdo;
     protected $tableName;
     protected $app;
+    private $pdo;
 
     public function __construct(Application $app, $tableName)
     {

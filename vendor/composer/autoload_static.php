@@ -6,79 +6,79 @@ namespace Composer\Autoload;
 
 class ComposerStaticInitfd5ef4db5e3812186777ed2e5772a889
 {
-    public static $files = array (
+    public static $files = array(
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         'f54c9b5e988cab550b89236716b03511' => __DIR__ . '/..' . '/graylog2/gelf-php/src/check_technical_requirements.php',
     );
 
-    public static $prefixLengthsPsr4 = array (
-        'T' => 
-        array (
-            'Twig\\' => 5,
-        ),
-        'S' => 
-        array (
-            'Symfony\\Polyfill\\Mbstring\\' => 26,
-            'Symfony\\Component\\Debug\\' => 24,
-            'Symfony\\Component\\Console\\' => 26,
-        ),
-        'P' => 
-        array (
-            'Psr\\Log\\' => 8,
-            'Phlib\\Logger\\' => 13,
-        ),
-        'G' => 
-        array (
-            'Gelf\\' => 5,
-        ),
+    public static $prefixLengthsPsr4 = array(
+        'T' =>
+            array(
+                'Twig\\' => 5,
+            ),
+        'S' =>
+            array(
+                'Symfony\\Polyfill\\Mbstring\\' => 26,
+                'Symfony\\Component\\Debug\\' => 24,
+                'Symfony\\Component\\Console\\' => 26,
+            ),
+        'P' =>
+            array(
+                'Psr\\Log\\' => 8,
+                'Phlib\\Logger\\' => 13,
+            ),
+        'G' =>
+            array(
+                'Gelf\\' => 5,
+            ),
     );
 
-    public static $prefixDirsPsr4 = array (
-        'Twig\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/twig/twig/src',
-        ),
-        'Symfony\\Polyfill\\Mbstring\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
-        ),
-        'Symfony\\Component\\Debug\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/debug',
-        ),
-        'Symfony\\Component\\Console\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/console',
-        ),
-        'Psr\\Log\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
-        ),
-        'Phlib\\Logger\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/phlib/logger/src',
-        ),
-        'Gelf\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/graylog2/gelf-php/src/Gelf',
-        ),
+    public static $prefixDirsPsr4 = array(
+        'Twig\\' =>
+            array(
+                0 => __DIR__ . '/..' . '/twig/twig/src',
+            ),
+        'Symfony\\Polyfill\\Mbstring\\' =>
+            array(
+                0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
+            ),
+        'Symfony\\Component\\Debug\\' =>
+            array(
+                0 => __DIR__ . '/..' . '/symfony/debug',
+            ),
+        'Symfony\\Component\\Console\\' =>
+            array(
+                0 => __DIR__ . '/..' . '/symfony/console',
+            ),
+        'Psr\\Log\\' =>
+            array(
+                0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
+            ),
+        'Phlib\\Logger\\' =>
+            array(
+                0 => __DIR__ . '/..' . '/phlib/logger/src',
+            ),
+        'Gelf\\' =>
+            array(
+                0 => __DIR__ . '/..' . '/graylog2/gelf-php/src/Gelf',
+            ),
     );
 
-    public static $prefixesPsr0 = array (
-        'T' => 
-        array (
-            'Twig_' => 
-            array (
-                0 => __DIR__ . '/..' . '/twig/twig/lib',
+    public static $prefixesPsr0 = array(
+        'T' =>
+            array(
+                'Twig_' =>
+                    array(
+                        0 => __DIR__ . '/..' . '/twig/twig/lib',
+                    ),
             ),
-        ),
-        'B' => 
-        array (
-            'Bramus' => 
-            array (
-                0 => __DIR__ . '/..' . '/bramus/router/src',
+        'B' =>
+            array(
+                'Bramus' =>
+                    array(
+                        0 => __DIR__ . '/..' . '/bramus/router/src',
+                    ),
             ),
-        ),
     );
 
     public static function getInitializer(ClassLoader $loader)

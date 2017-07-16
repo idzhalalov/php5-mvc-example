@@ -16,7 +16,7 @@ class MainPage extends Controller
 
     public function index()
     {
-        $data = $this->model->get(['user_name' => 'Max'], 1);
-        print_r($data);
+        $data = $this->model->get([], 3);
+        $this->view->display('template.twig', ['tasks' => $data]);
     }
 }
