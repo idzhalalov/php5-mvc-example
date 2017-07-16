@@ -29,7 +29,8 @@ class MainPage extends Controller
         $this->view->display('template.twig', [
             'tasks' => $data,
             'pagesCount' => $pagesCount,
-            'isAdmin' => $this->isAdmin
+            'isAdmin' => $this->isAdmin,
+            'currentPage' => 1
         ]);
     }
 
