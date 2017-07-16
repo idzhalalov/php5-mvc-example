@@ -9,7 +9,7 @@ class Application
     public $logger;
     private $controller;
     private $controllerName;
-    private $model;
+    protected $models = [];
 
     public function __construct(array $config)
     {
@@ -60,28 +60,30 @@ class Application
         exit;
     }
 
-    public function getModel()
+    public function getModel($name)
     {
-        if ($this->model !== null) {
-            return $this->model;
+        if (in_array($name, $this->models, true)) {
+            return $this->models[$name];
         }
 
         // include model file
-        $classFilename = $this->config['path']['models'] . "/$this->controllerName.php";
+        $classFilename = $this->config['path']['models'] . "/$name.php";
         $this->connectScript($classFilename);
 
         // instantiate model
-        $className = '\TestApp\Models\\' . $this->controllerName;
+        $className = '\TestApp\Models\\' . $name;
         if ($this->isValidClass($className)) {
-            $this->controller = new $className($this);
+            $this->models[$name] = new $className($this, $name);
         } else {
             $this->ApplicationError();
         }
+        return $this->models[$name];
     }
 
     private function connectScript($path)
     {
         if (file_exists($path)) {
+            $this->logger->info('Including ' . $path);
             include_once $path;
         } else {
             $this->logger->critical("File '$path' did not found", [__CLASS__]);
