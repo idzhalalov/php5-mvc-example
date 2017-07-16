@@ -8,12 +8,14 @@ class MainPage extends Controller
 {
     private $model;
     private $recordsPerPage;
+    private $isAdmin;
 
     public function __construct(Application $app)
     {
         parent::__construct($app);
         $this->model = $app->getModel('Tasks');
         $this->recordsPerPage = 3;
+        $this->isAdmin = $this->app->isAdmin();
     }
 
     public function index()
@@ -23,9 +25,11 @@ class MainPage extends Controller
         $pagesCount = ceil($rowsCount / $this->recordsPerPage);
 
         $data = $this->model->get([], $this->recordsPerPage);
+
         $this->view->display('template.twig', [
             'tasks' => $data,
-            'pagesCount' => $pagesCount
+            'pagesCount' => $pagesCount,
+            'isAdmin' => $this->isAdmin
         ]);
     }
 
@@ -48,6 +52,7 @@ class MainPage extends Controller
             'currentPage' => $pageNum,
             'prevPage' => $prevPage,
             'nextPage' => $nextPage,
+            'isAdmin' => $this->isAdmin
         ]);
     }
 }
