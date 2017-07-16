@@ -30,8 +30,8 @@ $router->get('/tasks/(\d+)', function ($pageNum) use ($app) {
 $router->post('/admin', function () use ($app) {
     $app->callController('AdminPage', 'login');
 });
-$router->post('/admin/task/(\d+)', function ($taskId) use ($app) {
-    $app->callController('AdminPage', 'task', ['taskId' => $taskId]);
+$router->post('/admin/task/', function () use ($app) {
+    $app->callController('AdminPage', 'task');
 });
 $router->get('/admin', function () use ($app) {
     $app->callController('AdminPage', 'index');
