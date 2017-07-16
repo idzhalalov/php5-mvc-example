@@ -11,7 +11,7 @@ abstract class Model
 {
     protected $tableName;
     protected $app;
-    private $pdo;
+    protected $pdo;
 
     public function __construct(Application $app, $tableName)
     {
@@ -33,15 +33,6 @@ abstract class Model
             $this->app->ApplicationError('Database Error');
         }
     }
-
-//    public function save(array $data, array $where = [])
-//    {
-//        $insert = true;
-//        if (in_array('id', $where, true)) {
-//            $insert = false;
-//        }
-//    }
-
 
     /**
      * @param array $where
@@ -66,13 +57,4 @@ abstract class Model
         return $statement->fetchAll();
     }
 
-//    public function delete(array $where = [])
-//    {
-//
-//    }
-//
-//    protected function setTableName($name)
-//    {
-//
-//    }
 }
