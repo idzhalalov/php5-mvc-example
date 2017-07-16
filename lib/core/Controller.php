@@ -1,7 +1,8 @@
 <?php
 namespace TestApp\Lib;
-use Twig_Loader_Filesystem;
+
 use Twig_Environment;
+use Twig_Loader_Filesystem;
 
 abstract class Controller
 {
@@ -21,7 +22,7 @@ abstract class Controller
     public function post($var, $default = null)
     {
         if (isset($_POST[$var])) {
-            return $_POST[$var];
+            return $this->sanitize($_POST[$var]);
         } else {
             return $default;
         }
@@ -30,10 +31,18 @@ abstract class Controller
     public function get($var, $default = null)
     {
         if (isset($_GET[$var])) {
-            return $_GET[$var];
+            return $this->sanitize($_GET[$var]);
         } else {
             return $default;
         }
+    }
+
+    protected function sanitize($var)
+    {
+        $var = strip_tags($var);
+        $var = stripcslashes($var);
+
+        return $var;
     }
 
 }
