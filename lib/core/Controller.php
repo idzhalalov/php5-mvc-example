@@ -6,15 +6,10 @@ use Twig_Environment;
 abstract class Controller
 {
     protected $app;
-    protected $view;
-    protected $model;
 
     public function __construct(Application $app)
     {
         $this->app = $app;
-
-        // model
-        $this->model = $this->app->getModel();
 
         // views
         $loader = new Twig_Loader_Filesystem($this->app->config['path']['views']);
