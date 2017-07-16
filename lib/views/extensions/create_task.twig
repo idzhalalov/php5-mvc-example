@@ -1,45 +1,25 @@
-<div class="panel panel-default">
-    <!-- Default panel contents -->
-    <div class="panel-heading">Задачи</div>
-
-    <!-- Table -->
-    <table class="table">
-        <thead>
-        <td><b>id</b></td>
-        <td><b>name</b></td>
-        <td><b>email</b></td>
-        <td><b>text</b></td>
-        <td><b>picture</b></td>
-        <td><b>status</b></td>
-        </thead>
-        {% for item in tasks %}
-            <tr>
-                <td>{{ item.id }}</td>
-                <td>{{ item.user_name }}</td>
-                <td>{{ item.user_email }}</td>
-                <td>{{ item.text }}</td>
-                <td>{{ item.picture }}</td>
-                <td>{{ item.status }}</td>
-            </tr>
-        {% endfor %}
-    </table>
+<div class="panel panel-default" style="padding: 15px">
+    <form action="/admin/task" method="post">
+        <div class="form-group">
+            <label for="exampleInputEmail1">User name</label>
+            <input type="text" class="form-control" id="id_username" placeholder="User name">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                   placeholder="Enter email">
+        </div>
+        <div class="form-group">
+            <label for="textarea">Task</label>
+            <textarea class="form-control" id="exampleTextarea" rows="5"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputFile">Select image</label>
+            <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
+            <small id="fileHelp" class="form-text text-muted">Image. Must be JPG/GIF/PNG, size — 320х240
+            </small>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="button" id="previewBtn" class="btn btn-warning">Preview</button>
+    </form>
 </div>
-{% block pagination %}
-    {% if pagesCount %}
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="{{ prevPage }}">Previous</a></li>
-                {% for i in range(1, pagesCount) %}
-                    {% if i == currentPage %}
-                        <li class="page-item active">
-                            <span class="page-link">{{ i }}<span class="sr-only">(current)</span></span>
-                        </li>
-                    {% else %}
-                        <li class="page-item"><a class="page-link" href="/tasks/{{ i }}">{{ i }}</a></li>
-                    {% endif %}
-                {% endfor %}
-                <li class="page-item"><a class="page-link" href="{{ nextPage }}">Next</a></li>
-            </ul>
-        </nav>
-    {% endif %}
-{% endblock %}
