@@ -34,6 +34,9 @@ $router->post('/admin', function () use ($app) {
 $router->post('/admin/task/', function () use ($app) {
     $app->callController('AdminPage', 'task');
 });
+$router->post('/admin/task/save', function () use ($app) {
+    $app->callController('AdminPage', 'taskSave');
+});
 $router->get('/admin', function () use ($app) {
     $app->callController('AdminPage', 'index');
 });
@@ -42,3 +45,4 @@ $router->post('/admin/logout', function () use ($app) {
 });
 
 $router->run();
+$app->clearTempData();
