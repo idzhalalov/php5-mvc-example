@@ -49,4 +49,12 @@ class AdminPage extends Controller
         }
         $this->view->display('template_admin.twig', ['task' => $task]);
     }
+
+    public function logout()
+    {
+        if (isset($_SESSION['admin'])) {
+            unset($_SESSION['admin']);
+        }
+        header("Location: {$_SERVER['HTTP_ORIGIN']}/");
+    }
 }

@@ -20,13 +20,14 @@ $app = new TestApp\Lib\Application($config);
 
 // Routing
 $router = new \Bramus\Router\Router();
-
 $router->get('/', function () use ($app) {
     $app->callController('MainPage', 'index');
 });
+// Tasks
 $router->get('/tasks/(\d+)', function ($pageNum) use ($app) {
     $app->callController('MainPage', 'tasks', ['pageNum' => $pageNum]);
 });
+// Admin
 $router->post('/admin', function () use ($app) {
     $app->callController('AdminPage', 'login');
 });
@@ -35,6 +36,9 @@ $router->post('/admin/task/', function () use ($app) {
 });
 $router->get('/admin', function () use ($app) {
     $app->callController('AdminPage', 'index');
+});
+$router->post('/admin/logout', function () use ($app) {
+    $app->callController('AdminPage', 'logout');
 });
 
 $router->run();
