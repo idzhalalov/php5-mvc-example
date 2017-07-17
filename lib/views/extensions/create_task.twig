@@ -1,7 +1,11 @@
 <div class="panel panel-default" style="padding: 15px">
 
-    {% if error_message is defined %}
+    {% if error_message != '' %}
         <div class="alert alert-danger">{{ error_message }}</div>
+    {% endif %}
+
+    {% if success_message != '' %}
+        <div class="alert alert-success">{{ success_message }}</div>
     {% endif %}
 
     <form action="/admin/task/save" method="post" enctype="multipart/form-data">
