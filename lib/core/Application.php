@@ -107,5 +107,38 @@ class Application
         return false;
     }
 
-}
+    public function setTempData(array $data)
+    {
+        if (!$data) {
+            return;
+        }
+        foreach ($data as $var => $val) {
+            $_SESSION['app_tmp_vars'][$var] = $val;
+        }
+    }
 
+    public function getTempData()
+    {
+        if (!isset($_SESSION['app_tmp_vars'])) {
+            return;
+        }
+        if (!is_array($_SESSION['app_tmp_vars'])) {
+            $varType = gettype($_SESSION['app_tmp_vars']);
+            $this->logger->warning('Session var "app_tmp_vars" is not array, is "' . $varType . '"', [__CLASS__]);
+        }
+
+        $data = [];
+        foreach ($_SESSION['app_tmp_vars'] as $var => $val) {
+            $data[$var] = $val;
+        }
+
+        return $data;
+    }
+
+    public function clearTempData()
+    {
+        if (isset($_SESSION['app_tmp_vars'])) {
+            unset($_SESSION['app_tmp_vars']);
+        }
+    }
+}
