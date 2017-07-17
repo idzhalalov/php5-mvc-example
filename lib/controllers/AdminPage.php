@@ -25,18 +25,15 @@ class AdminPage extends Controller
 
     public function login()
     {
-        $username = $this->post('username');
-        $password = $this->post('password');
-
-        if ($username === null || $password === null) {
-            $this->app->ApplicationError('Please, provide correct Username and Password');
-        }
+        $username = $this->post('username', '');
+        $password = $this->post('password', '');
 
         if ($username === 'admin' && $password === '123') {
             $_SESSION['admin'] = 1;
             header("Location: {$_SERVER['HTTP_ORIGIN']}/admin");
-            exit();
+            return;
         }
+        header("Location: {$_SERVER['HTTP_ORIGIN']}/");
     }
 
     public function task()
