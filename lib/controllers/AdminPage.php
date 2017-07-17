@@ -50,6 +50,52 @@ class AdminPage extends Controller
         $this->view->display('template_admin.twig', ['task' => $task]);
     }
 
+    public function taskSave()
+    {
+        if (!$this->app->isAdmin()) {
+            $this->app->ApplicationError('You must login first');
+        }
+        $errorMessage = '';
+
+        // processing POST
+        $taskId = $this->post('taskId');
+        $userName = $this->post('user_name', '');
+        $userEmail = $this->post('user_email');
+        $text = $this->post('text', '');
+        $is_done = $this->post('is_done', false) ? 1 : 0;
+        $task = [
+            'user_name' => $userName,
+            'user_email' => $userEmail,
+            'text' => $text,
+            'is_done' => $is_done
+        ];
+        // required fields
+        if (empty($userName) || empty($text)) {
+            $errorMessage = 'Please, fill all of required fields';
+        }
+        // email validation
+        if (!filter_var($userEmail, FILTER_VALIDATE_EMAIL)) {
+            $errorMessage = 'Please, provide correct email address';
+        }
+        if (!empty($errorMessage)) {
+            $this->view->display('template_admin.twig', [
+                'task' => $task,
+                'error_message' => $errorMessage]);
+            return;
+        }
+
+        // processing image
+
+
+        if ($taskId !== null) {
+            $taskId['id'] = $taskId;
+        }
+        $this->model->saveTask($task);
+        $this->view->display('template_admin.twig', [
+            'success_message' => 'The task was created!'
+        ]);
+    }
+
     public function logout()
     {
         if (isset($_SESSION['admin'])) {
