@@ -14,9 +14,9 @@ abstract class Controller
         $this->app = $app;
 
         // views
-        $loader = new Twig_Loader_Filesystem($this->app->config['path']['views']);
+        $loader = new Twig_Loader_Filesystem($this->app->config['application']['views']);
         $this->view = new Twig_Environment($loader, array(
-            'cache' => $this->app->config['path']['views_cache'],
+            'cache' => $this->app->config['application']['views_cache'],
         ));
     }
 

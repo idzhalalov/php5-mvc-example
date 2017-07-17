@@ -6,12 +6,17 @@ $config = [
         'user' => '',
         'password' => '',
     ],
-    'path' => [
-        'absolute' => __DIR__,
+    'application' => [
+        'absolute_path' => __DIR__,
         'controllers' => __DIR__ . '/lib/controllers',
         'models' => __DIR__ . '/lib/models',
         'views' => __DIR__ . '/lib/views',
         'views_cache' => __DIR__ . '/lib/views/cache',
+    ],
+    'pictures' => [
+        'max_width' => 320,
+        'max_height' => 240,
+        'path' => __DIR__ . '/pictures',
     ],
     'logger' => [
         'default' => [
