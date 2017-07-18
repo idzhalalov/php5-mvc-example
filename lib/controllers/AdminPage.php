@@ -8,11 +8,14 @@ use Upload\Exception\UploadException;
 class AdminPage extends Controller
 {
     private $model;
+    private $picturesPath;
 
     public function __construct(Application $app)
     {
         parent::__construct($app);
         $this->model = $app->getModel('Tasks');
+        $this->picturesPath = $this->app->config['application']['absolute_path'] .
+            $this->app->config['pictures']['path'];
     }
 
 
@@ -31,10 +34,10 @@ class AdminPage extends Controller
 
         if ($username === 'admin' && $password === '123') {
             $_SESSION['admin'] = 1;
-            header("Location: {$_SERVER['HTTP_ORIGIN']}/admin");
+            header("Location: {$this->app->config['application']['url']}/admin");
             return;
         }
-        header("Location: {$_SERVER['HTTP_ORIGIN']}/");
+        header("Location: {$this->app->config['application']['url']}");
     }
 
     public function task()
@@ -47,6 +50,10 @@ class AdminPage extends Controller
         $task = null;
         if ($taskId) {
             $task = $this->model->get(['id' => $taskId])[0];
+        }
+        if (!empty($task['picture'])) {
+            $task['picture'] = $this->app->config['application']['url'] .
+                $this->app->config['pictures']['path'] . '/' . $task['picture'];
         }
         $this->view->display('template_admin.twig', ['task' => $task]);
     }
@@ -83,6 +90,18 @@ class AdminPage extends Controller
         if (isset($_FILES['picture']) && file_exists($_FILES['picture']['tmp_name'])) {
             try {
                 $task['picture'] = $this->uploadPicture();
+
+                // unlink old picture
+                $picture = '';
+                if ($taskId !== null) {
+                    $currentTask = $this->model->get(['id' => $taskId])[0];
+                    $picture = $currentTask['picture'];
+                }
+                if (!empty($picture) &&
+                    file_exists($this->picturesPath . '/' . $picture)
+                ) {
+                    unlink($this->picturesPath . '/' . $picture);
+                }
             } catch (UploadException $exception) {
                 $errorMessage = $exception->getMessage();
             }
@@ -109,7 +128,7 @@ class AdminPage extends Controller
     private function uploadPicture()
     {
         try {
-            $storage = new \Upload\Storage\FileSystem($this->app->config['pictures']['path']);
+            $storage = new \Upload\Storage\FileSystem($this->picturesPath);
             $file = new \Upload\File('picture', $storage);
         } catch (\InvalidArgumentException $exception) {
             throw new UploadException($exception->getMessage());
@@ -135,9 +154,9 @@ class AdminPage extends Controller
             if ($pictureSize['width'] > $this->app->config['pictures']['max_width'] ||
                 $pictureSize['width'] > $this->app->config['pictures']['max_height']
             ) {
-                \Gregwar\Image\Image::open($this->app->config['pictures']['path'] . '/' . $newFilename . '.' . $pictureExt)
+                \Gregwar\Image\Image::open($this->picturesPath . '/' . $newFilename . '.' . $pictureExt)
                     ->cropResize($this->app->config['pictures']['max_width'], $this->app->config['pictures']['max_height'])
-                    ->save($this->app->config['pictures']['path'] . '/' . $newFilename . '.' . $pictureExt);
+                    ->save($this->picturesPath . '/' . $newFilename . '.' . $pictureExt);
             }
         }
         return $newFilename . '.' . $pictureExt;
@@ -148,6 +167,6 @@ class AdminPage extends Controller
         if (isset($_SESSION['admin'])) {
             unset($_SESSION['admin']);
         }
-        header("Location: {$_SERVER['HTTP_ORIGIN']}/");
+        header("Location: {$this->app->config['application']['url']}");
     }
 }
