@@ -3,6 +3,7 @@ namespace TestApp\Controllers;
 
 use TestApp\Lib\Application;
 use TestApp\Lib\Controller;
+use Upload\Exception\UploadException;
 
 class AdminPage extends Controller
 {
@@ -77,6 +78,17 @@ class AdminPage extends Controller
         if (!filter_var($userEmail, FILTER_VALIDATE_EMAIL)) {
             $errorMessage = 'Please, provide correct email address';
         }
+
+        // processing image
+        if (isset($_FILES['picture']) && file_exists($_FILES['picture']['tmp_name'])) {
+            try {
+                $task['picture'] = $this->uploadPicture();
+            } catch (UploadException $exception) {
+                $errorMessage = $exception->getMessage();
+            }
+        }
+
+        // finally check for errors
         if (!empty($errorMessage)) {
             $this->view->display('template_admin.twig', [
                 'task' => $task,
@@ -84,16 +96,51 @@ class AdminPage extends Controller
             return;
         }
 
-        // processing image
-
-
-        if ($taskId !== null) {
-            $taskId['id'] = $taskId;
-        }
-        $this->model->saveTask($task);
+        $this->model->saveTask($task, $taskId);
         $this->view->display('template_admin.twig', [
-            'success_message' => 'The task was created!'
+            'success_message' => 'The task is saved!'
         ]);
+    }
+
+
+    /**
+     * @throws UploadException On file upload error
+     */
+    private function uploadPicture()
+    {
+        try {
+            $storage = new \Upload\Storage\FileSystem($this->app->config['pictures']['path']);
+            $file = new \Upload\File('picture', $storage);
+        } catch (\InvalidArgumentException $exception) {
+            throw new UploadException($exception->getMessage());
+        }
+        $newFilename = uniqid('task_', time());
+        $file->setName($newFilename);
+        $file->addValidations([
+            new \Upload\Validation\Mimetype(['image/png', 'image/gif', 'image/jpg', 'image/jpeg', 'image/pjpeg']),
+            new \Upload\Validation\Extension(['jpg', 'png', 'gif']),
+        ]);
+        try {
+            $pictureSize = $file->getDimensions();
+            $pictureExt = $file->getExtension();
+            $file->upload();
+        } catch (\Exception $e) {
+            $errorMessage = $file->getErrors();
+            if (is_array($errorMessage)) {
+                throw new UploadException('Picture error: ' . implode(', ', $errorMessage));
+            }
+        }
+        if ($file->isOk()) {
+            // resize image
+            if ($pictureSize['width'] > $this->app->config['pictures']['max_width'] ||
+                $pictureSize['width'] > $this->app->config['pictures']['max_height']
+            ) {
+                \Gregwar\Image\Image::open($this->app->config['pictures']['path'] . '/' . $newFilename . '.' . $pictureExt)
+                    ->cropResize($this->app->config['pictures']['max_width'], $this->app->config['pictures']['max_height'])
+                    ->save($this->app->config['pictures']['path'] . '/' . $newFilename . '.' . $pictureExt);
+            }
+        }
+        return $newFilename . '.' . $pictureExt;
     }
 
     public function logout()
