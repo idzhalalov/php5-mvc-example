@@ -28,7 +28,9 @@
             <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp" name="picture">
             <small id="fileHelp" class="form-text text-muted">Image. Must be JPG/GIF/PNG, size — 320х240
             </small>
-            {{ task['picture'] }}
+            {% if task['picture'] != '' %}
+                <br><img src="{{ task['picture'] }}">
+            {% endif %}
         </div>
         <div class="form-check">
             <label class="form-check-label">
