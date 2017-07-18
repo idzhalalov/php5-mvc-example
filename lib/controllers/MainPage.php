@@ -30,7 +30,8 @@ class MainPage extends Controller
             'tasks' => $data,
             'pagesCount' => $pagesCount,
             'isAdmin' => $this->isAdmin,
-            'currentPage' => 1
+            'currentPage' => 1,
+            'pictures_url' => $this->app->config['application']['url'] . $this->app->config['pictures']['path']
         ]);
     }
 
@@ -53,7 +54,8 @@ class MainPage extends Controller
             'currentPage' => $pageNum,
             'prevPage' => $prevPage,
             'nextPage' => $nextPage,
-            'isAdmin' => $this->isAdmin
+            'isAdmin' => $this->isAdmin,
+            'pictures_url' => $this->app->config['application']['url'] . $this->app->config['pictures']['path']
         ]);
     }
 }

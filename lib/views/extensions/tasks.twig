@@ -18,7 +18,11 @@
                 <td>{{ item.user_name }}</td>
                 <td>{{ item.user_email }}</td>
                 <td>{{ item.text }}</td>
-                <td>{{ item.picture }}</td>
+                <td>
+                    {% if item.picture != '' %}
+                        <br><img src="{{ pictures_url }}/{{ item.picture }}">
+                    {% endif %}
+                </td>
                 <td class="text-center" style="font-size: smaller; font-weight: bold">
                     {% if item.is_done == 1 %} Done {% else %} Active {% endif %}
                 </td>
