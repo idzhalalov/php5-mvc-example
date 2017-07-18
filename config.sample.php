@@ -1,4 +1,6 @@
 <?php
+define('APP_URL', 'http://' . str_replace('/', '', $_SERVER['SERVER_NAME']));
+
 $config = [
     'database' => [
         'host' => '',
@@ -7,6 +9,7 @@ $config = [
         'password' => '',
     ],
     'application' => [
+        'url' => APP_URL,
         'absolute_path' => __DIR__,
         'controllers' => __DIR__ . '/lib/controllers',
         'models' => __DIR__ . '/lib/models',
@@ -17,6 +20,7 @@ $config = [
         'max_width' => 320,
         'max_height' => 240,
         'path' => __DIR__ . '/pictures',
+        'web_path' => APP_URL . '/pictures'
     ],
     'logger' => [
         'default' => [
