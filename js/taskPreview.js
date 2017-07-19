@@ -2,7 +2,8 @@ function readUrl(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
-            $('#previewUploadPicture').attr('src', e.target.result);
+            $('#uploadedPicture img').attr('src', e.target.result);
+            $('#uploadedPicture img').attr('width', 320);
         }
         reader.readAsDataURL(input.files[0]);
     }
@@ -12,12 +13,12 @@ $(document).ready(function () {
     $('#previewBtn').click(function () {
         $('#previewName').text($('#idUserName').val());
         $('#previewEmail').text($('#idUserEmail').val());
-        $('#previewText').text($('#idText').val());
+        $('#previewText').text($('#idText').text());
         var statusText = $('#idStatus').is(':checked') != true ? 'Active' : 'Done';
         $('#previewStatus').text(statusText);
         // preview image
-        readUrl($("#idPicture"));
-        $('#previewPicture').attr('src', $('#previewUploadPicture').attr('src'));
+        $('#previewPicture').attr('src', $('#uploadedPicture img').attr('src'));
+        $('#previewPicture').attr('width', $('#uploadedPicture img').attr('width'));
     });
 
     $("#idPicture").change(function () {
