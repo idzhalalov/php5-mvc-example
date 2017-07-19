@@ -3,6 +3,7 @@ namespace TestApp\Controllers;
 
 use TestApp\Lib\Application;
 use TestApp\Lib\Controller;
+use TestApp\Models\Tasks;
 use Upload\Exception\UploadException;
 
 class AdminPage extends Controller
@@ -13,7 +14,7 @@ class AdminPage extends Controller
     public function __construct(Application $app)
     {
         parent::__construct($app);
-        $this->model = $app->getModel('Tasks');
+        $this->model = new Tasks($app);
         $this->picturesPath = $this->app->config['application']['absolute_path'] .
             $this->app->config['pictures']['path'];
     }

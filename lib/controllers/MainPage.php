@@ -3,6 +3,7 @@ namespace TestApp\Controllers;
 
 use TestApp\Lib\Application;
 use TestApp\Lib\Controller;
+use TestApp\Models\Tasks;
 
 class MainPage extends Controller
 {
@@ -13,7 +14,7 @@ class MainPage extends Controller
     public function __construct(Application $app)
     {
         parent::__construct($app);
-        $this->model = $app->getModel('Tasks');
+        $this->model = new Tasks($app);
         $this->recordsPerPage = 3;
         $this->isAdmin = $this->app->isAdmin();
     }

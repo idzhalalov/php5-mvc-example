@@ -56,5 +56,4 @@ abstract class Model
         $statement->execute($where);
         return $statement->fetchAll();
     }
-
 }

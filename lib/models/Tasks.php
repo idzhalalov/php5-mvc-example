@@ -3,9 +3,15 @@ namespace TestApp\Models;
 
 use Psr\Log\InvalidArgumentException;
 use TestApp\Lib;
+use TestApp\Lib\Application;
 
 class Tasks extends Lib\Model
 {
+    public function __construct(Application $app)
+    {
+        parent::__construct($app, 'tasks');
+    }
+
     public function rowsCount()
     {
         $sql = 'SELECT count(id) as rows FROM ' . $this->tableName;
