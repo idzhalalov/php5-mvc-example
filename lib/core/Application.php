@@ -2,6 +2,7 @@
 namespace TestApp\Lib;
 
 use Phlib\Logger;
+use Psr\Log\InvalidArgumentException;
 
 class Application
 {
@@ -19,6 +20,10 @@ class Application
             new Logger\Factory()
         );
         $this->logger = $loggerPool->getLogger('default');
+        $this->initClasses([
+            $this->config['application']['controllers'],
+            $this->config['application']['models']
+        ]);
     }
 
     /**
@@ -31,10 +36,6 @@ class Application
     public function callController($controller, $method, array $args = [__CLASS__])
     {
         $this->controllerName = $controller;
-
-        // include controller file
-        $classFilename = $this->config['application']['controllers'] . "/$this->controllerName.php";
-        $this->connectScript($classFilename);
 
         // instantiate controller
         $className = '\TestApp\Controllers\\' . $this->controllerName;
@@ -139,6 +140,19 @@ class Application
     {
         if (isset($_SESSION['app_tmp_vars'])) {
             unset($_SESSION['app_tmp_vars']);
+        }
+    }
+
+    protected function initClasses($dirs)
+    {
+        if (!is_array($dirs) || !$dirs) {
+            throw new InvalidArgumentException('Argument "$dirs" is empty or not is array', [__CLASS__]);
+        }
+        foreach ($dirs as $dir) {
+            $fileSystem = new \FilesystemIterator($dir);
+            foreach ($fileSystem as $fileName) {
+                $this->connectScript($fileName);
+            }
         }
     }
 }
