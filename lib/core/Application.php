@@ -61,26 +61,6 @@ class Application
         exit;
     }
 
-    public function getModel($name)
-    {
-        if (in_array($name, $this->models, true)) {
-            return $this->models[$name];
-        }
-
-        // include model file
-        $classFilename = $this->config['application']['models'] . "/$name.php";
-        $this->connectScript($classFilename);
-
-        // instantiate model
-        $className = '\TestApp\Models\\' . $name;
-        if ($this->isValidClass($className)) {
-            $this->models[$name] = new $className($this, strtolower($name));
-        } else {
-            $this->ApplicationError();
-        }
-        return $this->models[$name];
-    }
-
     private function connectScript($path)
     {
         if (file_exists($path)) {
