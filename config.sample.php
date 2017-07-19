@@ -20,7 +20,6 @@ $config = [
         'max_width' => 320,
         'max_height' => 240,
         'path' => __DIR__ . '/pictures',
-        'web_path' => APP_URL . '/pictures'
     ],
     'logger' => [
         'default' => [
@@ -32,5 +31,5 @@ $config = [
                 'path' => __DIR__ . '/logs/app.log'
             ]
         ]
-    ],
+    ]
 ];
