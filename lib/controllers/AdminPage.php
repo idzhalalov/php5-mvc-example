@@ -86,7 +86,6 @@ class AdminPage extends Controller
         if (!filter_var($userEmail, FILTER_VALIDATE_EMAIL)) {
             $errorMessage = 'Please, provide correct email address';
         }
-
         // processing image
         if (isset($_FILES['picture']) && file_exists($_FILES['picture']['tmp_name'])) {
             try {
@@ -107,7 +106,6 @@ class AdminPage extends Controller
                 $errorMessage = $exception->getMessage();
             }
         }
-
         // finally check for errors
         if (!empty($errorMessage)) {
             $this->view->display('template_admin.twig', [
