@@ -22,20 +22,26 @@ abstract class Controller
 
     public function post($var, $default = null)
     {
-        if (isset($_POST[$var])) {
-            return $this->sanitize($_POST[$var]);
-        } else {
-            return $default;
-        }
+        return $this->superGlobals($var, $_POST, $default);
     }
 
     public function get($var, $default = null)
     {
-        if (isset($_GET[$var])) {
-            return $this->sanitize($_GET[$var]);
+        return $this->superGlobals($var, $_GET, $default);
+    }
+
+    private function superGlobals($var, array &$superGlobal, $default = null)
+    {
+        if (isset($superGlobal[$var])) {
+            $var = $this->sanitize($superGlobal[$var]);
+        }
+        if (!empty($var) && $var !== null) {
+            return $var;
         } else {
             return $default;
         }
+
+        return null;
     }
 
     protected function sanitize($var)
