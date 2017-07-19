@@ -11,30 +11,34 @@
     <form action="/admin/task/save" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="exampleInputEmail1">User name</label>
-            <input type="text" class="form-control" id="id_username" placeholder="User name"
+            <input type="text" class="form-control" id="idUserName" placeholder="User name"
                    value="{{ task['user_name'] }}" name="user_name" required>
         </div>
         <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+            <input type="email" class="form-control" id="idUserEmail" aria-describedby="emailHelp"
                    placeholder="Enter email" value="{{ task['user_email'] }}" name="user_email">
         </div>
         <div class="form-group">
             <label for="textarea">Task</label>
-            <textarea class="form-control" id="exampleTextarea" rows="5" name="text" required>{{ task['text'] }}</textarea>
+            <textarea class="form-control" id="idTexta" rows="5" name="text"
+                      required>{{ task['text'] }}</textarea>
         </div>
         <div class="form-group">
             <label for="exampleInputFile">Select image</label>
-            <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp" name="picture">
+            <input type="file" class="form-control-file" id="idPicture" aria-describedby="fileHelp"
+                   name="picture">
             <small id="fileHelp" class="form-text text-muted">Image. Must be JPG/GIF/PNG, size — 320х240
             </small>
             {% if task['picture'] != '' %}
                 <br><img src="{{ task['picture'] }}">
+            {% else %}
+                <br><img src="/pictures/placeholder.png" width="116" id="previewUploadPicture">
             {% endif %}
         </div>
         <div class="form-check">
             <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" name="is_done"
+                <input type="checkbox" id="idStatus" class="form-check-input" name="is_done"
                     {% if task['is_done'] == 1 %} checked {% endif %}">
                 Task is done
             </label>
@@ -42,6 +46,43 @@
         <br/>
         <input type="hidden" name="taskId" value="{{ task['id'] }}">
         <button type="submit" class="btn btn-primary">Submit</button>
-        <button type="button" id="previewBtn" class="btn btn-warning">Preview</button>
+        <button type="button" id="previewBtn" class="btn btn-warning" data-toggle="modal"
+                data-target="#myModal">Preview
+        </button>
     </form>
+</div>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="width: 95%">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Task Preview</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <td><b>name</b></td>
+                        <td><b>email</b></td>
+                        <td><b>text</b></td>
+                        <td><b>picture</b></td>
+                        <td><b>status</b></td>
+                    </tr>
+                    </thead>
+                    <tr>
+                        <td id="previewName"></td>
+                        <td id="previewEmail"></td>
+                        <td id="previewText"></td>
+                        <td><img src="#" width="320" id="previewPicture"></td>
+                        <td id="previewStatus" class="text-center" style="font-size: smaller; font-weight: bold"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>
