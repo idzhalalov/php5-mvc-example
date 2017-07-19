@@ -11,25 +11,26 @@ class MainPage extends Controller
     private $recordsPerPage;
     private $isAdmin;
 
+    protected $rowsCount;
+    protected $pagesCount;
+
     public function __construct(Application $app)
     {
         parent::__construct($app);
         $this->model = new Tasks($app);
-        $this->recordsPerPage = 3;
         $this->isAdmin = $this->app->isAdmin();
+        $this->recordsPerPage = 3;
+        $this->rowsCount = $this->model->rowsCount();
+        $this->pagesCount = ceil($this->rowsCount / $this->recordsPerPage);
     }
 
     public function index()
     {
-        // pagination
-        $rowsCount = $this->model->rowsCount();
-        $pagesCount = ceil($rowsCount / $this->recordsPerPage);
-
         $data = $this->model->get([], $this->recordsPerPage);
 
         $this->view->display('template.twig', [
             'tasks' => $data,
-            'pagesCount' => $pagesCount,
+            'pagesCount' => $this->pagesCount,
             'isAdmin' => $this->isAdmin,
             'currentPage' => 1,
             'pictures_url' => $this->app->config['application']['url'] . $this->app->config['pictures']['path']
@@ -38,20 +39,16 @@ class MainPage extends Controller
 
     public function tasks($pageNum)
     {
-        // pagination
-        $rowsCount = $this->model->rowsCount();
-        $pagesCount = ceil($rowsCount / $this->recordsPerPage);
-
         // current, prev, next page
         $endRecord = $this->recordsPerPage * $pageNum;
         $startRecord = $endRecord - $this->recordsPerPage;
         $prevPage = ($pageNum > 1) ? $pageNum - 1 : 1;
-        $nextPage = ($pageNum < $pagesCount) ? $pageNum + 1 : $pagesCount;
+        $nextPage = ($pageNum < $this->pagesCount) ? $pageNum + 1 : $this->pagesCount;
         $data = $this->model->get([], "$startRecord, {$this->recordsPerPage}");
 
         $this->view->display('template.twig', [
             'tasks' => $data,
-            'pagesCount' => $pagesCount,
+            'pagesCount' => $this->pagesCount,
             'currentPage' => $pageNum,
             'prevPage' => $prevPage,
             'nextPage' => $nextPage,
