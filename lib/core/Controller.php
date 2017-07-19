@@ -51,5 +51,4 @@ abstract class Controller
 
         return $var;
     }
-
 }
