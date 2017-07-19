@@ -8,9 +8,9 @@ class Application
 {
     public $config;
     public $logger;
+    protected $models = [];
     private $controller;
     private $controllerName;
-    protected $models = [];
 
     public function __construct(array $config)
     {
@@ -24,6 +24,38 @@ class Application
             $this->config['application']['controllers'],
             $this->config['application']['models']
         ]);
+    }
+
+    protected function initClasses($dirs)
+    {
+        if (!is_array($dirs) || !$dirs) {
+            throw new InvalidArgumentException('Argument "$dirs" is empty or not is array', [__CLASS__]);
+        }
+        foreach ($dirs as $dir) {
+            $fileSystem = new \FilesystemIterator($dir);
+            foreach ($fileSystem as $fileName) {
+                $this->connectScript($fileName);
+            }
+        }
+    }
+
+    private function connectScript($path)
+    {
+        if (file_exists($path)) {
+            $this->logger->info('Including ' . $path);
+            include_once $path;
+        } else {
+            $this->logger->critical("File '$path' did not found", [__CLASS__]);
+            $this->ApplicationError();
+        }
+    }
+
+    public function ApplicationError($message = 'Application Error')
+    {
+        $this->logger->info('Sending code 500 to client');
+        http_response_code(500);
+        echo $message;
+        exit;
     }
 
     /**
@@ -51,25 +83,6 @@ class Application
             $this->ApplicationError();
         }
         call_user_func_array([$this->controller, $method], $args);
-    }
-
-    public function ApplicationError($message = 'Application Error')
-    {
-        $this->logger->info('Sending code 500 to client');
-        http_response_code(500);
-        echo $message;
-        exit;
-    }
-
-    private function connectScript($path)
-    {
-        if (file_exists($path)) {
-            $this->logger->info('Including ' . $path);
-            include_once $path;
-        } else {
-            $this->logger->critical("File '$path' did not found", [__CLASS__]);
-            $this->ApplicationError();
-        }
     }
 
     private function isValidClass($className)
@@ -120,19 +133,6 @@ class Application
     {
         if (isset($_SESSION['app_tmp_vars'])) {
             unset($_SESSION['app_tmp_vars']);
-        }
-    }
-
-    protected function initClasses($dirs)
-    {
-        if (!is_array($dirs) || !$dirs) {
-            throw new InvalidArgumentException('Argument "$dirs" is empty or not is array', [__CLASS__]);
-        }
-        foreach ($dirs as $dir) {
-            $fileSystem = new \FilesystemIterator($dir);
-            foreach ($fileSystem as $fileName) {
-                $this->connectScript($fileName);
-            }
         }
     }
 }

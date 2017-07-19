@@ -7,12 +7,11 @@ use TestApp\Models\Tasks;
 
 class MainPage extends Controller
 {
+    protected $rowsCount;
+    protected $pagesCount;
     private $model;
     private $recordsPerPage;
     private $isAdmin;
-
-    protected $rowsCount;
-    protected $pagesCount;
 
     public function __construct(Application $app)
     {

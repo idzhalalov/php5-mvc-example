@@ -29,7 +29,7 @@ class Tasks extends Lib\Model
      */
     public function saveTask(array $data, $id = 0)
     {
-        $id = (int) $id;
+        $id = (int)$id;
         if (!$data) {
             throw new InvalidArgumentException(__METHOD__ . ' requires non empty array "$data"');
         }
