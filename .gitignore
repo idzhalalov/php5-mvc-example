@@ -1,8 +1,9 @@
-*.log
-composer.lock
-/vendor/
+vendor/
 cache/
-config.php
-/*bootstrap*
-*.zip
+pictures/
 dayside/
+config.php
+composer.lock
+*bootstrap*
+*.log
+*.zip
