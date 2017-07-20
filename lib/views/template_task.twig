@@ -1,5 +1,9 @@
 {% extends 'template.twig' %}
 
+{% block head %}
+    {{ include('head.twig') }}
+{% endblock %}
+
 {% block content %}
     {% if (is_admin == true) and (task['id'] is defined) %}
         {% include('extensions/edit_task.twig') %}
@@ -9,6 +13,6 @@
 {% endblock %}
 
 {% block scripts %}
-    {{ parent() }}
+    {{ include('common_js.twig') }}
     <script src="/js/taskPreview.js"></script>
 {% endblock %}
