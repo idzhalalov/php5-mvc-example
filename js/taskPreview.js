@@ -13,7 +13,7 @@ $(document).ready(function () {
     $('#previewBtn').click(function () {
         $('#previewName').text($('#idUserName').val());
         $('#previewEmail').text($('#idUserEmail').val());
-        $('#previewText').text($('#idText').text());
+        $('#previewText').text($('#idText').val());
         var statusText = $('#idStatus').is(':checked') != true ? 'Active' : 'Done';
         $('#previewStatus').text(statusText);
         // preview image
