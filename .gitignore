@@ -4,6 +4,5 @@ pictures/
 dayside/
 config.php
 composer.lock
-*bootstrap*
 *.log
 *.zip
