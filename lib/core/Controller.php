@@ -32,11 +32,12 @@ abstract class Controller
 
     private function superGlobals($var, array &$superGlobal, $default = null)
     {
+        $result = $default;
         if (isset($superGlobal[$var])) {
-            $var = $this->sanitize($superGlobal[$var]);
+            $result = $this->sanitize($superGlobal[$var]);
         }
-        if (!empty($var) && $var !== null) {
-            return $var;
+        if (!empty($result) && $result !== null) {
+            return $result;
         } else {
             return $default;
         }
