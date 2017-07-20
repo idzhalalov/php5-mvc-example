@@ -6,12 +6,11 @@
 <!-- Table -->
 <table class="table" id="tasks" width="100%">
     <thead>
-    <td><b>name</b></td>
-    <td><b>email</b></td>
-    <td><b>text</b></td>
-    <td><b>picture</b></td>
-    <td><b>status</b></td>
-    {% if isAdmin %}<td></td>{% endif %}
+    <td><b>Name</b></td>
+    <td><b>Email</b></td>
+    <td><b>Text</b></td>
+    <td><b>Picture</b></td>
+    <td class="text-right"><b>Status</b></td>
     </thead>
     <tbody>
     {% for item in tasks %}
@@ -24,11 +23,9 @@
                     <br><img src="{{ pictures_url }}/{{ item.picture }}" width="320">
                 {% endif %}
             </td>
-            <td class="text-center" style="font-size: smaller; font-weight: bold">
+            <td class="text-center" style="font-size: smaller">
                 {% if item.is_done == 1 %} Done {% else %} Active {% endif %}
-            </td>
-            {% if isAdmin %}
-                <td>
+                {% if isAdmin %}
                     <div id="navbar" class="navbar-collapse collapse">
                         {% if is_admin == true %}
                             <form class="navbar-form navbar-right" action="/task/" method="post">
@@ -37,8 +34,9 @@
                             </form>
                         {% endif %}
                     </div>
-                </td>
-            {% endif %}
+                {% endif %}
+            </td>
+
         </tr>
     {% endfor %}
     </tbody>

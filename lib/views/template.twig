@@ -4,6 +4,7 @@
 <head>
     {% block head %}
         {{ include('head.twig') }}
+        <link href="/bootstrap/css/dataTables.bootstrap.min.css" rel="stylesheet">
     {% endblock %}
 </head>
 
@@ -27,9 +28,9 @@
 <script src="/bootstrap/js/bootstrap.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="/bootstrap/assets/js/ie10-viewport-bug-workaround.js"></script>
+{% endblock %}
 <script src="/bootstrap/js/jquery.dataTables.min.js"></script>
 <script src="/js/tasks.js"></script>
-{% endblock %}
 </body>
 </html>
 
