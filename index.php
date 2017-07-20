@@ -37,9 +37,6 @@ $router->post('/task/', function () use ($app) {
 $router->post('/task/save', function () use ($app) {
     $app->callController('TaskPage', 'taskSave');
 });
-$router->get('/task', function () use ($app) {
-    $app->callController('TaskPage', 'index');
-});
 $router->post('/logout', function () use ($app) {
     $app->callController('TaskPage', 'logout');
 });

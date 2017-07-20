@@ -21,15 +21,6 @@ class TaskPage extends Controller
         $this->isAdmin = $this->app->isAdmin();
     }
 
-
-    public function index()
-    {
-        if (!$this->app->isAdmin()) {
-            $this->app->ApplicationError('You must login first');
-        }
-        $this->view->display('template_admin.twig');
-    }
-
     public function login()
     {
         $username = $this->post('username', '');
