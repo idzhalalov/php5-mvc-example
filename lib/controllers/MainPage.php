@@ -32,7 +32,8 @@ class MainPage extends Controller
             'pagesCount' => $this->pagesCount,
             'isAdmin' => $this->isAdmin,
             'currentPage' => 1,
-            'pictures_url' => $this->app->config['application']['url'] . $this->app->config['pictures']['path']
+            'pictures_url' => $this->app->config['application']['url'] . $this->app->config['pictures']['path'],
+            'is_admin' => $this->isAdmin
         ]);
     }
 
@@ -52,7 +53,8 @@ class MainPage extends Controller
             'prevPage' => $prevPage,
             'nextPage' => $nextPage,
             'isAdmin' => $this->isAdmin,
-            'pictures_url' => $this->app->config['application']['url'] . $this->app->config['pictures']['path']
+            'pictures_url' => $this->app->config['application']['url'] . $this->app->config['pictures']['path'],
+            'is_admin' => $this->isAdmin
         ]);
     }
 }
