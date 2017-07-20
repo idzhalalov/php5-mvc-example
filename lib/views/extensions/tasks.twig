@@ -29,10 +29,12 @@
                 {% if isAdmin %}
                     <td>
                         <div id="navbar" class="navbar-collapse collapse">
-                            <form class="navbar-form navbar-right" action="/task/" method="post">
-                                <input type="hidden" name="taskId" value="{{ item.id }}">
-                                <button type="submit" class="btn btn-success">Edit</button>
-                            </form>
+                            {% if is_admin == true %}
+                                <form class="navbar-form navbar-right" action="/task/" method="post">
+                                    <input type="hidden" name="taskId" value="{{ item.id }}">
+                                    <button type="submit" class="btn btn-success">Edit</button>
+                                </form>
+                            {% endif %}
                         </div>
                     </td>
                 {% endif %}
