@@ -22,12 +22,12 @@
                     <br><img src="{{ pictures_url }}/{{ item.picture }}" width="320">
                 {% endif %}
             </td>
-            <td class="text-left" style="font-size: smaller">
+            <td class="text-center" style="font-size: smaller; padding-top: 1.5%">
                 {% if item.is_done == 1 %} Done {% else %} Active {% endif %}
                 {% if isAdmin %}
                     <div id="navbar" class="navbar-collapse collapse">
                         {% if is_admin == true %}
-                            <form class="navbar-form navbar-right" action="/task/" method="post">
+                            <form class="navbar-form navbar-collapse" action="/task/" method="post">
                                 <input type="hidden" name="taskId" value="{{ item.id }}">
                                 <button type="submit" class="btn btn-success">Edit</button>
                             </form>
