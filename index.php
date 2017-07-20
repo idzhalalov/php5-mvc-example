@@ -28,20 +28,20 @@ $router->get('/tasks/(\d+)', function ($pageNum) use ($app) {
     $app->callController('MainPage', 'tasks', ['pageNum' => $pageNum]);
 });
 // Admin
-$router->post('/admin', function () use ($app) {
-    $app->callController('AdminPage', 'login');
+$router->post('/login', function () use ($app) {
+    $app->callController('TaskPage', 'login');
 });
-$router->post('/admin/task/', function () use ($app) {
-    $app->callController('AdminPage', 'task');
+$router->post('/task/', function () use ($app) {
+    $app->callController('TaskPage', 'task');
 });
-$router->post('/admin/task/save', function () use ($app) {
-    $app->callController('AdminPage', 'taskSave');
+$router->post('/task/save', function () use ($app) {
+    $app->callController('TaskPage', 'taskSave');
 });
-$router->get('/admin', function () use ($app) {
-    $app->callController('AdminPage', 'index');
+$router->get('/task', function () use ($app) {
+    $app->callController('TaskPage', 'index');
 });
-$router->post('/admin/logout', function () use ($app) {
-    $app->callController('AdminPage', 'logout');
+$router->post('/logout', function () use ($app) {
+    $app->callController('TaskPage', 'logout');
 });
 
 $router->run();

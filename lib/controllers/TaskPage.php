@@ -6,10 +6,11 @@ use TestApp\Lib\Controller;
 use TestApp\Models\Tasks;
 use Upload\Exception\UploadException;
 
-class AdminPage extends Controller
+class TaskPage extends Controller
 {
     private $model;
     private $picturesPath;
+    private $isAdmin;
 
     public function __construct(Application $app)
     {
@@ -17,6 +18,7 @@ class AdminPage extends Controller
         $this->model = new Tasks($app);
         $this->picturesPath = $this->app->config['application']['absolute_path'] .
             $this->app->config['pictures']['path'];
+        $this->isAdmin = $this->app->isAdmin();
     }
 
 
@@ -43,20 +45,19 @@ class AdminPage extends Controller
 
     public function task()
     {
-        if (!$this->app->isAdmin()) {
-            $this->app->ApplicationError('You must login first');
-        }
-
         $taskId = $this->post('taskId');
         $task = null;
-        if ($taskId) {
+        if ($taskId !== null) {
             $task = $this->model->get(['id' => $taskId])[0];
         }
         if (!empty($task['picture'])) {
             $task['picture'] = $this->app->config['application']['url'] .
                 $this->app->config['pictures']['path'] . '/' . $task['picture'];
         }
-        $this->view->display('template_admin.twig', ['task' => $task]);
+        $this->view->display('template.twig', [
+            'task' => $task,
+            'is_admin' => $this->isAdmin
+        ]);
     }
 
     public function taskSave()
