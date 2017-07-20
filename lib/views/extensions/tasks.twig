@@ -1,47 +1,49 @@
 <div class="panel panel-default">
     <!-- Default panel contents -->
     <div class="panel-heading">Tasks list</div>
-
-    <!-- Table -->
-    <table class="table">
-        <thead>
-        <td><b>id</b></td>
-        <td><b>name</b></td>
-        <td><b>email</b></td>
-        <td><b>text</b></td>
-        <td><b>picture</b></td>
-        <td><b>status</b></td>
-        </thead>
-        {% for item in tasks %}
-            <tr>
-                <td>{{ item.id }}</td>
-                <td>{{ item.user_name }}</td>
-                <td>{{ item.user_email }}</td>
-                <td>{{ item.text }}</td>
-                <td>
-                    {% if item.picture != '' %}
-                        <br><img src="{{ pictures_url }}/{{ item.picture }}" width="320">
-                    {% endif %}
-                </td>
-                <td class="text-center" style="font-size: smaller; font-weight: bold">
-                    {% if item.is_done == 1 %} Done {% else %} Active {% endif %}
-                </td>
-                {% if isAdmin %}
-                    <td>
-                        <div id="navbar" class="navbar-collapse collapse">
-                            {% if is_admin == true %}
-                                <form class="navbar-form navbar-right" action="/task/" method="post">
-                                    <input type="hidden" name="taskId" value="{{ item.id }}">
-                                    <button type="submit" class="btn btn-success">Edit</button>
-                                </form>
-                            {% endif %}
-                        </div>
-                    </td>
-                {% endif %}
-            </tr>
-        {% endfor %}
-    </table>
 </div>
+
+<!-- Table -->
+<table class="table" id="tasks" width="100%">
+    <thead>
+    <td><b>name</b></td>
+    <td><b>email</b></td>
+    <td><b>text</b></td>
+    <td><b>picture</b></td>
+    <td><b>status</b></td>
+    {% if isAdmin %}<td></td>{% endif %}
+    </thead>
+    <tbody>
+    {% for item in tasks %}
+        <tr>
+            <td>{{ item.user_name }}</td>
+            <td>{{ item.user_email }}</td>
+            <td>{{ item.text }}</td>
+            <td>
+                {% if item.picture != '' %}
+                    <br><img src="{{ pictures_url }}/{{ item.picture }}" width="320">
+                {% endif %}
+            </td>
+            <td class="text-center" style="font-size: smaller; font-weight: bold">
+                {% if item.is_done == 1 %} Done {% else %} Active {% endif %}
+            </td>
+            {% if isAdmin %}
+                <td>
+                    <div id="navbar" class="navbar-collapse collapse">
+                        {% if is_admin == true %}
+                            <form class="navbar-form navbar-right" action="/task/" method="post">
+                                <input type="hidden" name="taskId" value="{{ item.id }}">
+                                <button type="submit" class="btn btn-success">Edit</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
 {% block pagination %}
     {% if pagesCount %}
         <nav aria-label="Page navigation example">
