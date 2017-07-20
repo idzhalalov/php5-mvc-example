@@ -38,13 +38,15 @@
                 {% endif %}
             </div>
         </div>
+
         <div class="form-check">
             <label class="form-check-label">
-                <input type="checkbox" id="idStatus" class="form-check-input" name="is_done"
+                <input type="checkbox" id="idStatus" class="form-check-input" name="is_done"{% if is_admin != true %} disabled {% endif %}
                     {% if task['is_done'] == 1 %} checked {% endif %}">
                 Task is done
             </label>
         </div>
+
         <br/>
         <input type="hidden" name="taskId" value="{{ task['id'] }}">
         <button type="submit" class="btn btn-primary">Submit</button>
