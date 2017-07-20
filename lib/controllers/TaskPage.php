@@ -37,7 +37,7 @@ class TaskPage extends Controller
 
         if ($username === 'admin' && $password === '123') {
             $_SESSION['admin'] = 1;
-            header("Location: {$this->app->config['application']['url']}/admin");
+            header("Location: {$this->app->config['application']['url']}");
             return;
         }
         header("Location: {$this->app->config['application']['url']}");
@@ -54,7 +54,7 @@ class TaskPage extends Controller
             $task['picture'] = $this->app->config['application']['url'] .
                 $this->app->config['pictures']['path'] . '/' . $task['picture'];
         }
-        $this->view->display('template.twig', [
+        $this->view->display('template_task.twig', [
             'task' => $task,
             'is_admin' => $this->isAdmin
         ]);
@@ -62,9 +62,6 @@ class TaskPage extends Controller
 
     public function taskSave()
     {
-        if (!$this->app->isAdmin()) {
-            $this->app->ApplicationError('You must login first');
-        }
         $errorMessage = '';
 
         // processing POST
@@ -109,14 +106,17 @@ class TaskPage extends Controller
         }
         // finally check for errors
         if (!empty($errorMessage)) {
-            $this->view->display('template_admin.twig', [
+            $this->view->display('template_task.twig', [
                 'task' => $task,
-                'error_message' => $errorMessage]);
+                'is_admin' => $this->isAdmin,
+                'error_message' => $errorMessage
+            ]);
             return;
         }
 
         $this->model->saveTask($task, $taskId);
-        $this->view->display('template_admin.twig', [
+        $this->view->display('template_task.twig', [
+            'is_admin' => $this->isAdmin,
             'success_message' => 'The task is saved!'
         ]);
     }
