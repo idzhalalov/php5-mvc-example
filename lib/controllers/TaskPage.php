@@ -81,7 +81,7 @@ class TaskPage extends Controller
             $errorMessage = 'Please, fill all of required fields';
         }
         // email validation
-        if (!filter_var($userEmail, FILTER_VALIDATE_EMAIL)) {
+        if ($userEmail !== null && !filter_var($userEmail, FILTER_VALIDATE_EMAIL)) {
             $errorMessage = 'Please, provide correct email address';
         }
         // processing image
