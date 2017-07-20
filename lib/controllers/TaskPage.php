@@ -104,6 +104,13 @@ class TaskPage extends Controller
                 $errorMessage = $exception->getMessage();
             }
         }
+        // edit available for admin only
+        if ($taskId !== null && !$this->isAdmin) {
+            $task = null;
+            $errorMessage = 'Sorry, you does not have permissions for this';
+        } elseif ($this->isAdmin) {
+            unset($task['user_name'], $task['user_email'], $task['picture']);
+        }
         // finally check for errors
         if (!empty($errorMessage)) {
             $this->view->display('template_task.twig', [
